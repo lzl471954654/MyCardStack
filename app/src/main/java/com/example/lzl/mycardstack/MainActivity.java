@@ -36,10 +36,10 @@ public class MainActivity extends AppCompatActivity implements CardStackView.Ite
 
     void init()
     {
-        mCardStack = (CardStackView)findViewById(R.id.scores_cardStackView);
+        mCardStack = (CardStackView)findViewById(R.id.cardStackView);
         mCardStack.setItemExpendListener(this);
         final ScoresCardStackAdapter adapter = new ScoresCardStackAdapter(this);
-        mCardStack.setAnimatorAdapter(new AllMoveDownAnimatorAdapter(mCardStack));
+        //mCardStack.setAnimatorAdapter(new AllMoveDownAnimatorAdapter(mCardStack));
         final List<List<LessonData>> lists = new LinkedList<>();
         for(int i = 0;i<4;i++)
         {
@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements CardStackView.Ite
                 new Runnable() {
                     @Override
                     public void run() {
-                        adapter.updateData(Arrays.asList(color),lists);
+                        adapter.updateData(Arrays.asList(color));
                     }
                 }
                 , 200
