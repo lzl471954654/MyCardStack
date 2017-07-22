@@ -1,11 +1,16 @@
 package com.example.lzl.mycardstack;
 
 import android.os.Handler;
+import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 import com.loopeer.cardstack.AllMoveDownAnimatorAdapter;
 import com.loopeer.cardstack.CardStackView;
+import com.loopeer.cardstack.UpDownAnimatorAdapter;
+import com.loopeer.cardstack.UpDownStackAnimatorAdapter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,6 +19,9 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements CardStackView.ItemExpendListener{
     private CardStackView mCardStack;
+
+
+
     Integer[] color = {
             R.color.holo_blue_bright,
             R.color.holo_orange_light,
@@ -26,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements CardStackView.Ite
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         init();
     }
 
@@ -37,10 +46,11 @@ public class MainActivity extends AppCompatActivity implements CardStackView.Ite
     void init()
     {
         mCardStack = (CardStackView)findViewById(R.id.cardStackView);
+        ScoresCardStackAdapter adapter = new ScoresCardStackAdapter(this);
+        mCardStack.setAdapter(adapter);
+
         mCardStack.setItemExpendListener(this);
-        final ScoresCardStackAdapter adapter = new ScoresCardStackAdapter(this);
-        //mCardStack.setAnimatorAdapter(new AllMoveDownAnimatorAdapter(mCardStack));
-        final List<List<LessonData>> lists = new LinkedList<>();
+        List<List<LessonData>> lists = new LinkedList<>();
         for(int i = 0;i<4;i++)
         {
             List<LessonData> list = new LinkedList<>();
@@ -50,14 +60,10 @@ public class MainActivity extends AppCompatActivity implements CardStackView.Ite
             }
             lists.add(list);
         }
-        new Handler().postDelayed(
-                new Runnable() {
-                    @Override
-                    public void run() {
-                        adapter.updateData(Arrays.asList(color));
-                    }
-                }
-                , 200
-        );
+
+        adapter.updateData(Arrays.asList(color),lists);
+        //mCardStack.setAnimatorAdapter(new AllMoveDownAnimatorAdapter(mCardStack));
+        //mCardStack.setAnimatorAdapter(new UpDownAnimatorAdapter(mCardStack));
+        //mCardStack.setAnimatorAdapter(new UpDownStackAnimatorAdapter(mCardStack));
     }
 }

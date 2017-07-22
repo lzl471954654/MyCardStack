@@ -3,6 +3,7 @@ package com.example.lzl.mycardstack;
 import android.content.Context;
 import android.graphics.PorterDuff;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,19 +21,18 @@ import java.util.List;
  */
 
 public class ScoresCardStackAdapter extends StackAdapter<Integer> {
-    Context mContext;
+    //Context mContext;
     List<List<LessonData>> lessonList;
     public ScoresCardStackAdapter(Context context)
     {
         super(context);
-        mContext = context;
+        //mContext = context;
     }
 
 
     public void updateData(List data,List<List<LessonData>> lessonList) {
         this.lessonList = lessonList;
-        this.setData(data);
-        this.notifyDataSetChanged();
+        updateData(data);
         System.out.println("Updata!");
     }
 
@@ -93,6 +93,7 @@ public class ScoresCardStackAdapter extends StackAdapter<Integer> {
         {
             cardTitle.getBackground().setColorFilter(ContextCompat.getColor(getContext(),backgroundColorId), PorterDuff.Mode.SRC_IN);
             ScoresListAdapter adapter = new ScoresListAdapter(dataList.get(position));
+            scoreList.setLayoutManager(new LinearLayoutManager(getContext()));
             scoreList.setAdapter(adapter);
             System.out.println("holder onBind");
         }
@@ -102,7 +103,5 @@ public class ScoresCardStackAdapter extends StackAdapter<Integer> {
             scoreList.setVisibility(b ? View.VISIBLE : View.GONE);
             System.out.println("holder onItemExpand");
         }
-
-
     }
 }
